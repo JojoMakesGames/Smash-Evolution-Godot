@@ -1,0 +1,135 @@
+[gd_scene load_steps=15 format=3 uid="uid://hyx7a7mo3oxc"]
+
+[ext_resource type="Texture2D" uid="uid://bwm3qc8w8f6mj" path="res://Explosion.png" id="1_m00nn"]
+[ext_resource type="Script" path="res://Scenes/swinging_light.gd" id="1_mocx7"]
+[ext_resource type="Script" path="res://Scenes/flame_lights.gd" id="1_nlwrg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0to6i"]
+size = Vector2(2, 32)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dg7ux"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cm0v4"]
+
+[sub_resource type="Gradient" id="Gradient_sccw1"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_seln0"]
+gradient = SubResource("Gradient_sccw1")
+use_hdr = true
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_60rmv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_m00nn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"new_animation_1",
+"speed": 5.0
+}]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mjgdb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qn8cj"]
+radius = 3.16228
+
+[sub_resource type="Animation" id="Animation_3oxsk"]
+resource_name = "swinging_light"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [3.48787e-16, 0.897099, 3.48787e-16, -0.897099]
+}
+
+[sub_resource type="Animation" id="Animation_rwk1v"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [3.48787e-16]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3j8yl"]
+_data = {
+"RESET": SubResource("Animation_rwk1v"),
+"swinging_light": SubResource("Animation_3oxsk")
+}
+
+[node name="FlameLights" type="Node2D"]
+script = ExtResource("1_nlwrg")
+
+[node name="Rope" type="AnimatableBody2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_mocx7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rope"]
+position = Vector2(0, 16)
+shape = SubResource("RectangleShape2D_0to6i")
+
+[node name="LightSource" type="AnimatableBody2D" parent="Rope"]
+position = Vector2(0, 32)
+collision_layer = 2
+collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_dg7ux")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rope/LightSource"]
+shape = SubResource("CircleShape2D_cm0v4")
+
+[node name="PointLight2D" type="PointLight2D" parent="Rope/LightSource"]
+scale = Vector2(15.557, 10)
+color = Color(0.572549, 0.878431, 0.160784, 1)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_seln0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Rope/LightSource"]
+sprite_frames = SubResource("SpriteFrames_60rmv")
+
+[node name="ColorRect" type="ColorRect" parent="Rope"]
+z_index = -1
+offset_left = -1.0
+offset_right = 1.0
+offset_bottom = 38.0
+color = Color(0.572549, 0.545098, 0.211765, 1)
+
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+node_a = NodePath("../Rope")
+node_b = NodePath("../Anchor")
+
+[node name="Anchor" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_mjgdb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Anchor"]
+shape = SubResource("CircleShape2D_qn8cj")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "swinging_light"
+playback_process_mode = 0
+libraries = {
+"": SubResource("AnimationLibrary_3j8yl")
+}

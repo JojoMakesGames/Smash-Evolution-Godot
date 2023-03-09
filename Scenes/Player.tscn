@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://bvrf5xw142yxq"]
+
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_6osx5"]
+[ext_resource type="Texture2D" uid="uid://c8ds3u2klr0rg" path="res://Mokujin 7.png" id="1_fgg1s"]
+[ext_resource type="PackedScene" uid="uid://w563alpl6pt1" path="res://Scenes/player_state_machine.tscn" id="3_ymqno"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nsyxq"]
+atlas = ExtResource("1_fgg1s")
+region = Rect2(0, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u10nt"]
+atlas = ExtResource("1_fgg1s")
+region = Rect2(32, 0, 32, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nnbqk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nsyxq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u10nt")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ji1m5"]
+size = Vector2(2.8, 3.7)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("state_machine")]
+z_index = 1
+disable_mode = 2
+script = ExtResource("1_6osx5")
+SPEED = 300.0
+JUMP_VELOCITY = -600.0
+state_machine = NodePath("PlayerStateMachine")
+acceleration = 20.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_nnbqk")
+animation = &"new_animation"
+frame_progress = 0.607725
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.19209e-06, 0.499999)
+scale = Vector2(10, 10)
+shape = SubResource("RectangleShape2D_ji1m5")
+debug_color = Color(1, 0, 0.0901961, 0.419608)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+
+[node name="PlayerStateMachine" parent="." instance=ExtResource("3_ymqno")]
