@@ -32,9 +32,12 @@ func physics_update(delta):
 
 func handle_input(delta):
 	super.handle_input(delta)
-	if(player.is_on_floor()):
+	if player.is_on_floor():
 		state_machine.change_state(state_machine.idle)
-		
+	elif Input.is_action_pressed("shoot") and state_machine.shooting.check_can_shoot(Time.get_ticks_msec()):
+		state_machine.change_state(state_machine.shooting)
+
+
 func check_jump_multiplier():
 	if is_jumping:
 		time_since_jump = Time.get_ticks_msec() - start_time
