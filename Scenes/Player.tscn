@@ -1,8 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bvrf5xw142yxq"]
+[gd_scene load_steps=8 format=3 uid="uid://bn4h4uaiohsd"]
 
-[ext_resource type="Script" path="res://Scripts/player.gd" id="1_6osx5"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/player.gd" id="1_4el0h"]
 [ext_resource type="Texture2D" uid="uid://c8ds3u2klr0rg" path="res://Mokujin 7.png" id="1_fgg1s"]
-[ext_resource type="PackedScene" uid="uid://w563alpl6pt1" path="res://Scenes/player_state_machine.tscn" id="3_ymqno"]
+[ext_resource type="PackedScene" path="res://Scenes/player_state_machine.tscn" id="3_ymqno"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nsyxq"]
 atlas = ExtResource("1_fgg1s")
@@ -32,7 +32,7 @@ size = Vector2(2.8, 3.7)
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("state_machine")]
 z_index = 1
 disable_mode = 2
-script = ExtResource("1_6osx5")
+script = ExtResource("1_4el0h")
 SPEED = 300.0
 JUMP_VELOCITY = -600.0
 state_machine = NodePath("PlayerStateMachine")
@@ -50,6 +50,7 @@ shape = SubResource("RectangleShape2D_ji1m5")
 debug_color = Color(1, 0, 0.0901961, 0.419608)
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
 position_smoothing_enabled = true
 
 [node name="PlayerStateMachine" parent="." instance=ExtResource("3_ymqno")]

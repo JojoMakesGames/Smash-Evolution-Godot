@@ -11,11 +11,9 @@ var gravity
 
 func enter():
 	super.enter()
-	print("Enter in air")
 	
 func exit():
 	super.exit()
-	print("Exit in air")
 
 func do_checks():
 	super.do_checks()

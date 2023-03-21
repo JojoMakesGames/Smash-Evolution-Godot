@@ -7,11 +7,9 @@ var direction: float:
 
 func enter():
 	super.enter()
-	print("Enter Moving")
 	
 func exit():
 	super.exit()
-	print("Exit Moving")	
 
 func do_checks():
 	super.do_checks()
@@ -22,7 +20,6 @@ func physics_update(delta):
 	player.velocity.x = move_toward(player.velocity.x, direction * player.SPEED, player.acceleration)
 	
 	player.move_and_slide()
-	print(player.velocity)
 	
 
 func handle_input(delta):

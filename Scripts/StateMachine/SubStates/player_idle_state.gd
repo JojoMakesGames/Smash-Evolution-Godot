@@ -5,11 +5,9 @@ var x_input: float
 
 func enter():
 	super.enter()
-	print("Enter idle")
 	
 func exit():
 	super.exit()
-	print("Exit idle")
 
 func handle_input(delta):
 	super.handle_input(delta)

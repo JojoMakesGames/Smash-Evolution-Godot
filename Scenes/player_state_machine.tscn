@@ -1,11 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://w563alpl6pt1"]
+[gd_scene load_steps=7 format=3]
 
-[ext_resource type="Script" path="res://Scripts/player_state_machine.gd" id="1_hyuxl"]
-[ext_resource type="Script" path="res://Scripts/player_idle_state.gd" id="1_sdo2a"]
-[ext_resource type="Script" path="res://Scripts/player_moving_script.gd" id="3_5picd"]
-[ext_resource type="Script" path="res://Scripts/player_jumping_state.gd" id="4_ovk60"]
-[ext_resource type="Script" path="res://Scripts/player_in_air_state.gd" id="5_b2oct"]
-[ext_resource type="Script" path="res://Scripts/player_shooting_state.gd" id="6_tbpbx"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/player_state_machine.gd" id="1_hyuxl"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/SubStates/player_idle_state.gd" id="1_sdo2a"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/SubStates/player_moving_script.gd" id="3_5picd"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/SubStates/player_jumping_state.gd" id="4_ovk60"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/SuperStates/player_in_air_state.gd" id="5_b2oct"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/SubStates/player_shooting_state.gd" id="6_tbpbx"]
 
 [node name="PlayerStateMachine" type="Node" node_paths=PackedStringArray("idle", "moving", "jumping", "in_air", "shooting")]
 script = ExtResource("1_hyuxl")
@@ -15,17 +15,17 @@ jumping = NodePath("PlayerJumpingState")
 in_air = NodePath("PlayerInAirState")
 shooting = NodePath("PlayerShootingStates")
 
-[node name="PlayerIdleState" type="Node" parent="."]
+[node name="PlayerIdleState" type="Node2D" parent="."]
 script = ExtResource("1_sdo2a")
 
-[node name="PlayerMovingState" type="Node" parent="."]
+[node name="PlayerMovingState" type="Node2D" parent="."]
 script = ExtResource("3_5picd")
 
-[node name="PlayerJumpingState" type="Node" parent="."]
+[node name="PlayerJumpingState" type="Node2D" parent="."]
 script = ExtResource("4_ovk60")
 
-[node name="PlayerInAirState" type="Node" parent="."]
+[node name="PlayerInAirState" type="Node2D" parent="."]
 script = ExtResource("5_b2oct")
 
-[node name="PlayerShootingStates" type="Node" parent="."]
+[node name="PlayerShootingStates" type="Node2D" parent="."]
 script = ExtResource("6_tbpbx")
